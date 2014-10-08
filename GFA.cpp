@@ -87,7 +87,7 @@ GFA::Link GFA::parseLink(std::istream& input)
     input >> link.id[0];
     input >> link.orientation[0];
     input >> link.id[1];
-    input >> link.orientation[2];
+    input >> link.orientation[1];
     input >> link.cigar;
     return link;
 }

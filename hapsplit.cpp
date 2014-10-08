@@ -102,7 +102,9 @@ int main(int argc, char** argv)
     for(size_t li = 0; li < links.size(); ++li) {
 
         GFA::Link link = links[li];
-        printf("\n======Link %s -> %s =======\n", link.id[0].c_str(), link.id[1].c_str());
+        printf("\n======Link %s -> %s %c %c =======\n", 
+               link.id[0].c_str(), link.id[1].c_str(),
+               link.orientation[0], link.orientation[1]);
 
         // Determine how long the alignments are
         int n_aligned_0 = 0;
@@ -115,9 +117,13 @@ int main(int argc, char** argv)
         GFA::Segment* segment_1 = segment_map[link.id[1]];
         assert(segment_0 && segment_1);
 
-        std::string& s0 = segment_0->sequence;
+        std::string s0 = segment_0->sequence;
         std::string s1 = segment_1->sequence;
-        if(link.orientation[0] != link.orientation[1])
+
+        if(link.orientation[0] == '-')
+            s0 = reverseComplement(s0);
+        
+        if(link.orientation[1] == '-')
             s1 = reverseComplement(s1);
 
         int curr_0 = s0.length() - n_aligned_0;
