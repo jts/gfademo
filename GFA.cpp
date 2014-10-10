@@ -74,7 +74,7 @@ GFA::Segment GFA::parseSegment(std::istream& input)
     input >> segment.id;
     input >> segment.sequence;
 
-    // Parse any tags but discard them for now
+    // Parse and discard tags
     std::string tags;
     getline(input, tags);
 
@@ -89,6 +89,11 @@ GFA::Link GFA::parseLink(std::istream& input)
     input >> link.id[1];
     input >> link.orientation[1];
     input >> link.cigar;
+    
+    // Parse and discard tags
+    std::string tags;
+    getline(input, tags);
+
     return link;
 }
 
@@ -101,5 +106,10 @@ GFA::Containment GFA::parseContainment(std::istream& input)
     input >> containment.orientation[1];
     input >> containment.offset;
     input >> containment.cigar;
+    
+    // Parse and discard tags
+    std::string tags;
+    getline(input, tags);
+    
     return containment;
 }
