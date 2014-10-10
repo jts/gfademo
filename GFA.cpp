@@ -98,7 +98,7 @@ GFA::Containment GFA::parseContainment(std::istream& input)
     input >> containment.id[0];
     input >> containment.orientation[0];
     input >> containment.id[1];
-    input >> containment.orientation[2];
+    input >> containment.orientation[1];
     input >> containment.offset;
     input >> containment.cigar;
     return containment;

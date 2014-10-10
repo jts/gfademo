@@ -1,5 +1,5 @@
 
-all: hapsplit
+all: gfademo
 
-hapsplit: hapsplit.cpp GFA.h GFA.cpp
+gfademo: gfademo.cpp GFA.h GFA.cpp
 	g++ -o $@ $^
