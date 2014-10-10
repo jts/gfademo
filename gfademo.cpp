@@ -156,7 +156,7 @@ void printAlignment(const std::string& s0, const std::string& s1,
 
 int main(int argc, char** argv)
 {
-    if(argc == 0) {
+    if(argc != 2) {
         fprintf(stderr, "Usage: ./gfademo file.gfa\n");
         exit(EXIT_FAILURE);
     }
@@ -164,7 +164,7 @@ int main(int argc, char** argv)
     GFA::SegmentVector segments;
     GFA::LinkVector links;
     GFA::ContainmentVector containments;
-    GFA::readFile("test.gfa",
+    GFA::readFile(argv[1],
                   segments,
                   links,
                   containments);
@@ -178,7 +178,7 @@ int main(int argc, char** argv)
     for(size_t li = 0; li < links.size(); ++li) {
 
         GFA::Link link = links[li];
-        printf("\n====== Link %s %c %s %c %s =======\n", 
+        printf("====== Link %s %c %s %c %s =======\n", 
                link.id[0].c_str(), link.orientation[0], 
                link.id[1].c_str(), link.orientation[1],
                link.cigar.c_str());
@@ -206,6 +206,7 @@ int main(int argc, char** argv)
             s1 = reverseComplement(s1);
         
         printAlignment(s0, s1, s0.length() - n_aligned_0, link.cigar);
+        printf("\n");
     }
 
     // Print Containments
@@ -213,7 +214,7 @@ int main(int argc, char** argv)
     for(size_t ci = 0; ci < containments.size(); ++ci) {
 
         GFA::Containment containment = containments[ci];
-        printf("\n====== Containment %s %c %s %c %d %s =======\n", 
+        printf("====== Containment %s %c %s %c %d %s =======\n", 
                containment.id[0].c_str(), containment.orientation[0], 
                containment.id[1].c_str(), containment.orientation[1],
                containment.offset,
@@ -233,5 +234,6 @@ int main(int argc, char** argv)
             s1 = reverseComplement(s1);
         
         printAlignment(s0, s1, containment.offset, containment.cigar);
+        printf("\n");
     }    
 }
