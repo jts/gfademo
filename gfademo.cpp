@@ -80,6 +80,8 @@ void calculateCigarConsumption(const std::string& cigar,
 void printAlignment(const std::string& s0, const std::string& s1,
                     int offset, const std::string& cigar)
 {
+    char cblank = ' ';
+
     int curr_0 = offset;
     int curr_1 = 0;
     assert(curr_0 >= 0);
@@ -90,7 +92,7 @@ void printAlignment(const std::string& s0, const std::string& s1,
 
     // Add leading unmatched sequence
     m0.append(s0.substr(0, curr_0));
-    m1.append(curr_0, '.');
+    m1.append(curr_0, cblank);
 
     int length;
     char op;
@@ -119,14 +121,14 @@ void printAlignment(const std::string& s0, const std::string& s1,
     }
 
     // Add trailing unmatched sequence
-    m0.append(s1.length() - curr_1, '.');
+    m0.append(s1.length() - curr_1, cblank);
     m1.append(s1.substr(curr_1));
 
     int matches = 0;
     int mismatches = 0;
     int gaps = 0;
     for(size_t i = 0; i < m0.size(); ++i) {
-        if(m0[i] == '.' || m1[i] == '.')
+        if(m0[i] == cblank || m1[i] == cblank)
             continue;
 
         bool is_gap = (m0[i] == '-' || m1[i] == '-');
@@ -148,7 +150,7 @@ void printAlignment(const std::string& s0, const std::string& s1,
         std::string sub0 = m0.substr(i, end - i);
         std::string sub1 = m1.substr(i, end - i);
         printf("M0: %s\n", sub0.c_str());
-        printf("M1: %s\n", sub1.c_str());
+        printf("M1: %s\n\n", sub1.c_str());
     }
     
     printf("Matches: %d Mismatches: %d Gaps: %d Identity: %.3lf\n", matches, mismatches, gaps, pi);
@@ -178,7 +180,7 @@ int main(int argc, char** argv)
     for(size_t li = 0; li < links.size(); ++li) {
 
         GFA::Link link = links[li];
-        printf("====== Link %s %c %s %c %s =======\n", 
+        printf("====== Link %s %c %s %c %s =======\n\n", 
                link.id[0].c_str(), link.orientation[0], 
                link.id[1].c_str(), link.orientation[1],
                link.cigar.c_str());
@@ -214,7 +216,7 @@ int main(int argc, char** argv)
     for(size_t ci = 0; ci < containments.size(); ++ci) {
 
         GFA::Containment containment = containments[ci];
-        printf("====== Containment %s %c %s %c %d %s =======\n", 
+        printf("====== Containment %s %c %s %c %d %s =======\n\n", 
                containment.id[0].c_str(), containment.orientation[0], 
                containment.id[1].c_str(), containment.orientation[1],
                containment.offset,
