@@ -1,5 +1,8 @@
 
+SRC=gfademo.cpp GFA.cpp
+HEADER=GFA.h
+
 all: gfademo
 
-gfademo: gfademo.cpp GFA.h GFA.cpp
-	g++ -o $@ $^
+gfademo: $(SRC) $(HEADER)
+	g++ -o $@ $(SRC)
